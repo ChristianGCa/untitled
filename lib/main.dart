@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,9 @@ class _HomePageState extends State<HomePage> {
     print(count);
   }
 
+  bool get isEmpty => count == 0;
+  bool get isFull => count == 20;
+
   @override
   Widget build(BuildContext context) {
 
@@ -58,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Pode',
+                isFull ? 'Lotado' : 'Pode entrar',
                 style: TextStyle(
                     fontSize: 40,
                     color: Colors.white,
@@ -67,21 +71,21 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Text('$count',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 100,
-                      color: Colors.white,
+                      color: isFull ? Colors.red : Colors.white,
                     )),
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 TextButton(
+                  onPressed: isEmpty ? null : decrement,
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: isEmpty ? Colors.white.withValues(alpha: 0.2) : Colors.white,
                       fixedSize: const Size(100, 60),
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       )),
-                  onPressed: decrement,
                   child: Text(
                     'Saiu',
                     style: TextStyle(color: Colors.black, fontSize: 20),
@@ -89,14 +93,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 32),
                 TextButton(
+                  onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: isFull ? Colors.white.withValues(alpha: 0.2) : Colors.white,
                       fixedSize: const Size(100, 60),
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       )),
-                  onPressed: increment,
                   child: Text(
                     'Entrou',
                     style: TextStyle(color: Colors.black, fontSize: 20),
